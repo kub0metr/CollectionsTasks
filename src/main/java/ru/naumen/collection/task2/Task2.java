@@ -1,5 +1,7 @@
 package ru.naumen.collection.task2;
 
+import java.util.HashMap;
+
 /**
  * Дано:
  * <pre>
@@ -22,7 +24,22 @@ package ru.naumen.collection.task2;
  * @author vpyzhyanov
  * @since 19.10.2023
  */
+
+/**
+ * 1. HashMap выбрана так как мы можем одновременно хранить id билета, и то какую еду мы купили. А также за счёт того, что операция доступа по ключу и добавления
+ * выполняются за константу.
+ * 2. Для всех зрителей - O(N).
+ * 3. Так как у нас всего две операции и они выполняются за константу.
+ */
 public class Task2 {
 
-    // TODO
+    HashMap<Ticket, String> combos = new HashMap<>();
+
+    public void buyFood(String food, Ticket ticket){
+        combos.put(ticket, food);
+    }
+
+    public String getFood(Ticket ticket){
+        return combos.get(ticket);
+    }
 }

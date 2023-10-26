@@ -2,8 +2,7 @@ package ru.naumen.collection.task1;
 
 import ru.naumen.collection.task2.Ticket;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Дано:
@@ -25,11 +24,17 @@ import java.util.List;
  * <p>Метод должен быть оптимален по производительности.</p>
  * <p>Пользоваться можно только стандартными классами Java SE.
  * Коллекции collA, collB изменять запрещено.</p>
- *
+ * <p>
  * См. {@link User}
  *
  * @author vpyzhyanov
  * @since 19.10.2023
+ */
+
+/**
+ * 1. Выбран HashSet так как операция contains и add всего за O(1).
+ * 2. Сложность операции O(N).
+ * 3. Сложность такова так как мы всего один раз проходим по коллекции и при проверке и при добавлении требуется всего O(1) операций.
  */
 public class Task1 {
 
@@ -37,7 +42,12 @@ public class Task1 {
      * Возвращает дубликаты пользователей, которые есть в обеих коллекциях
      */
     public static List<User> findDuplicates(Collection<User> collA, Collection<User> collB) {
-        // TODO
-        return null;
+        List<User> duplicates = new ArrayList<>();
+        Set<User> setA = new HashSet<>(collA);
+        for (User user : collB) {
+            if (setA.contains(user))
+                duplicates.add(user);
+        }
+        return duplicates;
     }
 }
