@@ -23,28 +23,33 @@ import java.util.*;
  */
 public class WarAndPeace {
 
-    private static final Path WAR_AND_PEACE_FILE_PATH = Path.of("src/main/resources", "Красное колесо.txt");
+    private static final Path WAR_AND_PEACE_FILE_PATH = Path.of("src/main/resources", "Лев_Толстой_Война_и_мир_Том_1,_2,_3,_4_(UTF-8).txt");
 
     public static void main(String[] args) {
-        Map<String, Integer> count = new HashMap<>();
+        Map<String, Integer> count = new LinkedHashMap<>();
         new WordParser(WAR_AND_PEACE_FILE_PATH).forEachWord(word -> {
             count.put(word, count.getOrDefault(word, 0) + 1);
         });
-        Queue<String> pqTop = new PriorityQueue<>((w1, w2) -> count.get(w2) - count.get(w1));
-        Queue<String> pqLast = new PriorityQueue<>(Comparator.comparingInt(count::get));
+        Queue<String> pq = new PriorityQueue<>(Comparator.comparingInt(count::get));
         for (String word : count.keySet()) {
-            pqTop.offer(word);
-            pqLast.offer(word);
+            pq.offer(word);
+            if (pq.size() > 10)
+                pq.poll();
         }
         System.err.println("Первые 10");
         for (int i = 0; i < 10; i++) {
-            String word = pqTop.poll();
+            String word = pq.poll();
             System.err.println(word + " " + count.get(word));
         }
-
+        pq = new PriorityQueue<>((w1, w2) -> count.get(w2) - count.get(w1));
+        for (String word : count.keySet()) {
+            pq.offer(word);
+            if (pq.size() > 10)
+                pq.poll();
+        }
         System.err.println(" Последние 10");
         for (int i = 0; i < 10; i++) {
-            String word = pqLast.poll();
+            String word = pq.poll();
             System.err.println(word + " " + count.get(word));
         }
     }
