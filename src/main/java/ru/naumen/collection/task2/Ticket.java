@@ -22,6 +22,6 @@ public class Ticket {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Long.hashCode(this.id);
     }
 }
